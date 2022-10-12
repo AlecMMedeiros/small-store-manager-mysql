@@ -1,4 +1,6 @@
+const { productSchema } = require('../middlewares/schemas');
 const { productsService } = require('../services');
+const { smallMap } = require('../utils/mapError');
 
 const controllerListAllProducts = async (_req, res) => {
   const [result] = await productsService.serviceListAllProducts();
@@ -13,8 +15,14 @@ const controllerListByIdProducts = async (req, res) => {
 };
 
 const controllerInsertProduct = async (req, res) => {
-  const { name } = req.body;
-  const controllerInserProduct = await productsService.serviceInsertProduct(name);
+  const payload = req.body;
+  const getErrors = await productSchema.validate(payload, { abortEarly: false });
+  if (getErrors.error) {
+    const error = getErrors.error.details[0].message;
+    if (error === smallMap[400]) return res.status(400).json({ message: error });
+    if (error === smallMap[422]) return res.status(422).json({ message: error });
+  }
+  const controllerInserProduct = await productsService.serviceInsertProduct(payload.name);
   return res.status(201).json(controllerInserProduct);
 };
 
