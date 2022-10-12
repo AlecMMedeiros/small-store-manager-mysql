@@ -13,6 +13,11 @@ const listAllMock = [
   }
 ]
 
+const newProduct = {
+  name: "ProdutoX"
+};
+
 module.exports = {
   listAllMock,
+  newProduct,
 }

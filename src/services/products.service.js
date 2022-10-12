@@ -10,7 +10,14 @@ const serviceListByIdProducts = async (productId) => {
   return result;
 };
 
+const serviceInsertProduct = async (productName) => {
+  const newProductId = await productsModel.insertProduct(productName);
+  const newProductResponse = await productsModel.listById(newProductId);
+  return newProductResponse;
+};
+
 module.exports = {
   serviceListAllProducts,
   serviceListByIdProducts,
+  serviceInsertProduct,
 };

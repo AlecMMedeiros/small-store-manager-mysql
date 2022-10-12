@@ -22,4 +22,14 @@ describe('Verificação da camada "Products Service"', function () {
       expect(serviceListByIDProducts).to.be.deep.equal(listAllMock[0]);
     });
   });
-})
+  describe('Verificação da funcionalidade de inserir produtos através do usado da camada service', function () {
+    it('Verifica de é possível cadastrar um novo produto via services"', async function () {
+      sino.stub(productsModel, 'insertProduct').resolves([{ insertId: 1 }]);
+      sino.stub(productsModel, 'listById').resolves(listAllMock[0]);
+
+      const serviceInsertProduct = await productsService.serviceInsertProduct('Martelo deThor');    
+
+      expect(serviceInsertProduct).to.be.deep.equal(listAllMock[0]);
+    });
+  });
+});

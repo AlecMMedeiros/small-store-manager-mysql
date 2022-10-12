@@ -12,7 +12,14 @@ const controllerListByIdProducts = async (req, res) => {
     : res.status(404).json({ message: 'Product not found' });
 };
 
+const controllerInsertProduct = async (req, res) => {
+  const { name } = req.body;
+  const controllerInserProduct = await productsService.serviceInsertProduct(name);
+  return res.status(201).json(controllerInserProduct);
+};
+
 module.exports = {
   controllerListAllProducts,
   controllerListByIdProducts,
+  controllerInsertProduct,
 };
