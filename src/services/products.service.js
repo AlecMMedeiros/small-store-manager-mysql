@@ -16,8 +16,17 @@ const serviceInsertProduct = async (productName) => {
   return newProductResponse;
 };
 
+const serviceUpdateProduct = async (id, productName) => {
+  const verify = await productsModel.listById(id);
+  if (verify === undefined) return verify;
+  await productsModel.updateProduct(id, productName);
+  const newProductResponse = await productsModel.listById(id);
+  return newProductResponse;
+};
+
 module.exports = {
   serviceListAllProducts,
   serviceListByIdProducts,
   serviceInsertProduct,
+  serviceUpdateProduct,
 };

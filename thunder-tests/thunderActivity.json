@@ -93,16 +93,16 @@
     "colId": "history",
     "containerId": "",
     "name": "localhost:3000/sales",
-    "url": "localhost:3000/sales",
-    "method": "POST",
+    "url": "localhost:3000/products/1",
+    "method": "PUT",
     "sortNum": 0,
     "created": "2022-10-13T17:00:16.391Z",
-    "modified": "2022-10-13T20:06:40.564Z",
+    "modified": "2022-10-13T21:26:07.883Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "[\n  {\n    \"productId\": 1,\n    \"quantity\": 1\n  }\n]",
+      "raw": "{\n  \"name\": \"Martelo do \"\n}\n",
       "form": []
     },
     "tests": []
