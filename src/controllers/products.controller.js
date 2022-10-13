@@ -28,17 +28,16 @@ const controllerInsertProduct = async (req, res) => {
 
 const controllerUpdateProduct = async (req, res) => {
   const { id } = req.params;
-  const { name } = req.body;
   const payload = req.body;
-  const getErrors = await productSchema.validate(payload, { abortEarly: false });
+  const getErrors = productSchema.validate(payload, { abortEarly: false });
   if (getErrors.error) {
     const error = getErrors.error.details[0].message;
     if (error === smallMap[400]) return res.status(400).json({ message: error });
     if (error === smallMap[422]) return res.status(422).json({ message: error });
   }
-  const result = await productsService.serviceUpdateProduct(id, name);
-   return result ? res.status(200).json(result)
-    : res.status(404).json({ message: 'Product not found' });
+  const result = await productsService.serviceUpdateProduct(id, payload.name);
+  console.log(result.message);
+  return res.status(result.code).json(result.message);
 };
 
 module.exports = {

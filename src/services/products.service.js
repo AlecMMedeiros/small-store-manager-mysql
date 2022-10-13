@@ -17,11 +17,11 @@ const serviceInsertProduct = async (productName) => {
 };
 
 const serviceUpdateProduct = async (id, productName) => {
-  const verify = await productsModel.listById(id);
-  if (verify === undefined) return verify;
+  const verify = await productsModel.listById(id);  
+  if (verify === undefined) return { code: 404, message: { message: 'Product not found' } };
   await productsModel.updateProduct(id, productName);
   const newProductResponse = await productsModel.listById(id);
-  return newProductResponse;
+  return { code: 200, message: newProductResponse };
 };
 
 module.exports = {
