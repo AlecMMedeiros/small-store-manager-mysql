@@ -9,7 +9,7 @@ const { listAllMock } = require('../Mocks/products.model.mock');
 const { expect } = chai;
 chai.use(sinonChai);
 
-describe('Verificação da camada "Products Sevice" ', function () {
+describe('Verificação da camada "Products controller" ', function () {
   afterEach(sinon.restore);
   it('Verifica se o listar todos os produtos, recebe-se a lista de produtos e o código de resposta 200', async function () {
     const res = {};
