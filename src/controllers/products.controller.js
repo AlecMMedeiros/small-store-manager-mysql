@@ -1,5 +1,5 @@
 const { productSchema } = require('../middlewares/schemas');
-const { productsService } = require('../services');
+const { productsService, salesService } = require('../services');
 const { smallMap } = require('../utils/mapError');
 
 const controllerListAllProducts = async (_req, res) => {
@@ -35,9 +35,14 @@ const controllerUpdateProduct = async (req, res) => {
     if (error === smallMap[400]) return res.status(400).json({ message: error });
     if (error === smallMap[422]) return res.status(422).json({ message: error });
   }
-  const result = await productsService.serviceUpdateProduct(id, payload.name);
-  console.log(result.message);
+  const result = await productsService.serviceUpdateProduct(id, payload.name); 
   return res.status(result.code).json(result.message);
+};
+
+const controllerDeleteProduct = async (req, res) => {
+  const { id } = req.params;
+  const deleteProduct = await productsService.serviceDeleteProduct(id);
+  return res.status(deleteProduct.code).json(deleteProduct.message);
 };
 
 module.exports = {
@@ -45,4 +50,5 @@ module.exports = {
   controllerListByIdProducts,
   controllerInsertProduct,
   controllerUpdateProduct,
+  controllerDeleteProduct,
 };

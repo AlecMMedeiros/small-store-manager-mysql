@@ -68,4 +68,34 @@ describe('Verificação da camada "Products controller" ', function () {
     expect(res.json).to.have.been.calledWith({ id: 4, name: "ProdutoX" });
 
   });
+  it('Verifica se ao atualizar um produto, recebe-se o resumo do novo prodito e o código de resposta 200', async function () {
+    const res = {};
+    const req = {
+      body: {
+        name: "Martelo do Batman"
+      },
+      params: {
+        id: 1
+      },
+    };
+
+    const response = {
+      code: 200,
+      message: {
+        id: 1,
+        name: "Martelo do Batman"
+      },
+    }
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon
+      .stub(productsService, 'serviceUpdateProduct')
+      .resolves(response);
+
+    await productsController.controllerUpdateProduct(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith({ id: 1, name: "Martelo do Batman" });
+
+  });
 });

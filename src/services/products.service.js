@@ -24,9 +24,17 @@ const serviceUpdateProduct = async (id, productName) => {
   return { code: 200, message: newProductResponse };
 };
 
+const serviceDeleteProduct = async (productId) => {
+  const verify = await productsModel.listById(productId);
+  if (verify === undefined) return { code: 404, message: { message: 'Product not found' } };
+  await productsModel.deleteProduct(productId);
+  return { code: 204, message: `Product ${productId} was deleted` };
+};
+
 module.exports = {
   serviceListAllProducts,
   serviceListByIdProducts,
   serviceInsertProduct,
   serviceUpdateProduct,
+  serviceDeleteProduct,  
 };

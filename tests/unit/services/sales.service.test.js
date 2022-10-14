@@ -105,7 +105,7 @@ describe('Verificação da camada "Sales Service"', function () {
     });
   })
   describe('Verifica se é possível listar as vendas através da camada service', function () {
-    it('Verifica se é possível listar venda através do id', async function () {  
+    it('Verifica se é possível listar a venda através do id', async function () {  
       const response = [{
         date: '2022-10-13 19:50:57',
         productId: 1,
@@ -115,12 +115,32 @@ describe('Verificação da camada "Sales Service"', function () {
       const newSale = await salesService.serviceListSales(1);
       expect(newSale.message).to.be.deep.equal(response);
     })
-    it('Verifica se é possível listar venda através de id inexistente', async function () {
+    it('Verifica se é possível listar a venda através de id inexistente', async function () {
       sinon.stub(salesModel, 'listSaleDate').resolves([[undefined]]);
       sinon.stub(salesModel, 'listSaleProduct').resolves([[{ saleId: 1, productId: 1, quantity: 1 }]]);
       const response = { "message": "Sale not found" }
       const newSale = await salesService.serviceListSales(99);
       expect(newSale.message).to.be.deep.equal(response);
+    })
+    it('Verifica se é possível listar todas as venda ', async function () {  
+      const payload = [  {
+          saleId: 1,
+          date: "2021-09-09T04:54:29.000Z",
+          productId: 1,
+          quantity: 2
+        },
+        {
+          saleId: 1,
+          date: "2021-09-09T04:54:54.000Z",
+          productId: 2,
+          quantity: 2
+        }
+      ]    
+      sinon.stub(salesModel, 'listAllSalesProducts').resolves([payload]); 
+      
+      const newSale = await salesService.serviceListAllSales();
+      
+      expect(newSale.message).to.be.deep.equal(payload);
     })
   })
 })

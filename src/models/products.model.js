@@ -5,7 +5,7 @@ const listAll = async () => {
   const result = await connection.execute(
     'SELECT * FROM StoreManager.products',
   );
-  return camelize(result);  
+  return camelize(result);
 };
 
 const listById = async (productId) => {
@@ -26,11 +26,15 @@ const insertProduct = async (productName) => {
 
 const updateProduct = async (id, name) => connection
   .execute('UPDATE StoreManager.products SET name= ? WHERE id = ?',
-  [name, id]);
-    
+    [name, id]);
+
+const deleteProduct = async (productId) => connection
+  .execute('DELETE FROM StoreManager.products WHERE id =?', [productId]);
+
 module.exports = {
   listAll,
   listById,
   insertProduct,
   updateProduct,
+  deleteProduct,
 };
