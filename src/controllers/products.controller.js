@@ -1,5 +1,5 @@
 const { productSchema } = require('../middlewares/schemas');
-const { productsService, salesService } = require('../services');
+const { productsService } = require('../services');
 const { smallMap } = require('../utils/mapError');
 
 const controllerListAllProducts = async (_req, res) => {
