@@ -15,6 +15,22 @@ const controllerNewSale = async (req, res) => {
   return newSale.message === 'Product not found' ? res.status(404).json(newSale)
     : res.status(201).json(newSale);
 };
+
+const controllerListSaleById = async (req, res) => {
+  const { id } = req.params;
+  const result = await salesService.serviceListSales(id); 
+
+  return res.status(result.code).json(result.message);
+};
+
+const controllerListAllSales = async (_req, res) => {
+  const getAllSales = await salesService.serviceListAllSales();
+
+  return res.status(getAllSales.code).json(getAllSales.message);
+};
+
 module.exports = {
   controllerNewSale,
+  controllerListSaleById,
+  controllerListAllSales,
 };

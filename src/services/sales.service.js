@@ -21,6 +21,20 @@ const serviceNewSale = async (payload) => {
   return newSaleResponse;
 };
 
+const serviceListSales = async (saleId) => { 
+  const [byIdSales] = await salesModel.listSalesProductsBySalesId(saleId);
+  if (byIdSales.length === 0) return { code: 404, message: { message: 'Sale not found' } };
+  return { code: 200, message: byIdSales };
+};
+
+const serviceListAllSales = async () => {
+ const [allSalles] = await salesModel.listAllSalesProducts();
+ 
+  return { code: 200, message: allSalles };
+};
+
 module.exports = {
   serviceNewSale,
+  serviceListSales,
+  serviceListAllSales,
 };

@@ -27,4 +27,21 @@ describe('Verificação da camada "Sales Model"', function () {
       expect(newSale).to.be.deep.equal([{ saleId: 1, productId: 1, quantity: 1 }]);
     })
   })
+  describe('Verificação da possibilidade de listar as vendas', function () {
+    it('Verifica a funcionadalidade da função "listSaleProduct', async function () {
+      sinon.stub(connection, 'execute').resolves([{ saleId: 1, productId: 1, quantity: 1 }]);
+
+      const newSale = await salesModel.listSaleProduct(1)
+      
+      expect(newSale).to.be.deep.equal(([{ saleId: 1, productId: 1, quantity: 1 }]));
+    })
+    it('Verifica a funcionadalidade da função "listSaleDate', async function () {
+      sinon.stub(connection, 'execute').resolves([{ id: 1, date: '2022-10-13 19:50:57' }]);
+
+      const newSale = await salesModel.listSaleDate(1)
+
+      expect(newSale).to.be.deep.equal([{ id: 1, date: '2022-10-13 19:50:57' }]);
+    })
+  })
 })
+
