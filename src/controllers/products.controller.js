@@ -45,10 +45,17 @@ const controllerDeleteProduct = async (req, res) => {
   return res.status(deleteProduct.code).json(deleteProduct.message);
 };
 
+const controllerSeachProduct = async (req, res) => {
+  const { q } = req.query;
+  const [result] = await productsService.serviceSearchProduct(q);
+  return res.status(200).json(result);
+};
+
 module.exports = {
   controllerListAllProducts,
   controllerListByIdProducts,
   controllerInsertProduct,
   controllerUpdateProduct,
   controllerDeleteProduct,
+  controllerSeachProduct,
 };

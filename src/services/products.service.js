@@ -1,4 +1,4 @@
-const { productsModel } = require('../models');
+const { productsModel, salesModel } = require('../models');
 
 const serviceListAllProducts = async () => {
   const result = await productsModel.listAll();  
@@ -31,10 +31,17 @@ const serviceDeleteProduct = async (productId) => {
   return { code: 204, message: `Product ${productId} was deleted` };
 };
 
+const serviceSearchProduct = async (name) => {
+  console.log(name); 
+
+  return name ? productsModel.searchProductByName(name) : productsModel.listAll();
+};
+
 module.exports = {
   serviceListAllProducts,
   serviceListByIdProducts,
   serviceInsertProduct,
   serviceUpdateProduct,
-  serviceDeleteProduct,  
+  serviceDeleteProduct,
+  serviceSearchProduct,
 };

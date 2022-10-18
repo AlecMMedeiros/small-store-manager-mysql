@@ -18,8 +18,8 @@ const insertSaleProduct = async (saleId, playload) => {
 
 const listSaleProduct = async (saleId) => {
   const result = await connection.execute(
-    'SELECT * FROM StoreManager.sales_products WHERE sale_id = ?',
-    [saleId],
+    `SELECT product_id, quantity FROM sales_products 
+    WHERE sale_id = ?`, [saleId],
   );
   return camelize(result);
 };
@@ -41,7 +41,8 @@ const listAllSalesDate = async () => {
 
 const listSalesProductsBySalesId = async (saleId) => {
   const result = await connection.execute(
-    `SELECT DISTINCT date, product_id, quantity FROM sales_products, sales 
+    `SELECT DISTINCT date, product_id, quantity 
+    FROM StoreManager.sales_products, StoreManager.sales 
     WHERE sale_id = ? ORDER BY product_id`,
     [saleId],
   );
@@ -56,6 +57,17 @@ const listAllSalesProducts = async () => {
   return camelize(result);
 };
 
+const deleteSale = async (saleId) => {
+  connection.execute('DELETE FROM StoreManager.sales WHERE id = ?',
+  [saleId]);
+};
+
+const updateSale = async (saleId, payload) => {
+  await connection.execute(`UPDATE StoreManager.sales_products SET quantity = ? 
+  WHERE sale_id = ? AND product_id = ? `, 
+    [payload.quantity, saleId, payload.productId]);
+};
+
 module.exports = {
   insertSale,
   insertSaleProduct,
@@ -64,5 +76,7 @@ module.exports = {
   listAllSalesDate,
   listSalesProductsBySalesId,
   listAllSalesProducts,
+  deleteSale,
+  updateSale,
 
 };

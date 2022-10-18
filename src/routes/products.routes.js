@@ -3,12 +3,13 @@ const { productsController } = require('../controllers');
 
 const productsRoute = express.Router();
 
-productsRoute.delete('/:id', productsController.controllerDeleteProduct);
+productsRoute.get('/search', productsController.controllerSeachProduct);
 productsRoute.put('/:id', productsController.controllerUpdateProduct);
 productsRoute.get('/:id', productsController.controllerListByIdProducts);
 productsRoute.get('/', productsController.controllerListAllProducts);
 
 productsRoute.post('/', productsController.controllerInsertProduct);
+productsRoute.delete('/:id', productsController.controllerDeleteProduct);
 module.exports = {
   productsRoute,
 };

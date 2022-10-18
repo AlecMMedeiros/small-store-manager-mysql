@@ -43,5 +43,11 @@ describe('Verificação da camada "Sales Model"', function () {
       expect(newSale).to.be.deep.equal([{ id: 1, date: '2022-10-13 19:50:57' }]);
     })
   })
+  describe('Verificação da possibilidade de excluir uma venda através da camada model', function () {
+    it('Verifica funcionalidade do método "deleteSale" da camada model', async function () {
+      // Em desenvolvimento
+
+    })
+  })
 })
 

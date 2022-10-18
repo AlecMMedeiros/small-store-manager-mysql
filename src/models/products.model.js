@@ -28,6 +28,13 @@ const updateProduct = async (id, name) => connection
   .execute('UPDATE StoreManager.products SET name= ? WHERE id = ?',
     [name, id]);
 
+const searchProductByName = async (name) => {
+  const result = await connection
+    .execute(`SELECT * FROM StoreManager.products WHERE LOWER(products.name) LIKE "%${name}%"`);
+  
+  return camelize(result);
+};
+
 const deleteProduct = async (productId) => connection
   .execute('DELETE FROM StoreManager.products WHERE id =?', [productId]);
 
@@ -36,5 +43,7 @@ module.exports = {
   listById,
   insertProduct,
   updateProduct,
+  searchProductByName,
   deleteProduct,
+  
 };

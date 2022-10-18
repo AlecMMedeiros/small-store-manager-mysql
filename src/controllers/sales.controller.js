@@ -18,19 +18,39 @@ const controllerNewSale = async (req, res) => {
 
 const controllerListSaleById = async (req, res) => {
   const { id } = req.params;
-  const result = await salesService.serviceListSales(id); 
-
+  const result = await salesService.serviceListSales(id);
   return res.status(result.code).json(result.message);
 };
 
 const controllerListAllSales = async (_req, res) => {
   const getAllSales = await salesService.serviceListAllSales();
-
   return res.status(getAllSales.code).json(getAllSales.message);
+};
+
+const controllerDeleteSale = async (req, res) => {
+  const { id } = req.params;
+  const result = await salesService.serviceDeleteSale(id);
+  return res.status(result.code).json(result.message);
+};
+
+const controllerUpdateSale = async (req, res) => {
+  const { id } = req.params;
+  const payload = req.body;
+  const [getErrors] = payload.map((item) => saleSchema.validate(item, { abortEarly: false }));
+  if (getErrors.error) {
+    const wrongResponse = SalesMiddlewares
+      .getSalesErros(res, Object.values(getErrors)[1].details[0].message);
+    return wrongResponse;
+  }
+  const result = await salesService.servicUpdateSale(id, payload);
+
+  return res.status(result.code).json(result.message);
 };
 
 module.exports = {
   controllerNewSale,
   controllerListSaleById,
   controllerListAllSales,
+  controllerDeleteSale,
+  controllerUpdateSale,
 };
