@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const { salesModel } = require('../../../src/models');
+const { salesModel, productsModel } = require('../../../src/models');
 const connection = require('../../../src/models/database/connection');
 
 
@@ -45,7 +45,22 @@ describe('Verificação da camada "Sales Model"', function () {
   })
   describe('Verificação da possibilidade de excluir uma venda através da camada model', function () {
     it('Verifica funcionalidade do método "deleteSale" da camada model', async function () {
-      // Em desenvolvimento
+      const responseMock = [
+        {
+          fieldCount: 0,
+          affectedRows: 1,
+          insertId: 0,
+          info: '',
+          serverStatus: 2,
+          warningStatus: 0
+        },
+        undefined
+      ];
+      sinon.stub(connection, 'execute').resolves(responseMock);
+      
+      const affectedRows = await salesModel.deleteSale(1);   
+
+      expect(affectedRows).to.be.equal(1)
 
     })
   })

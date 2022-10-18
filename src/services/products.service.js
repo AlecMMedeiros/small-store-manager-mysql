@@ -31,11 +31,8 @@ const serviceDeleteProduct = async (productId) => {
   return { code: 204, message: `Product ${productId} was deleted` };
 };
 
-const serviceSearchProduct = async (name) => {
-  console.log(name); 
-
-  return name ? productsModel.searchProductByName(name) : productsModel.listAll();
-};
+const serviceSearchProduct = async (name) => (name ? productsModel.searchProductByName(name)
+  : productsModel.listAll());
 
 module.exports = {
   serviceListAllProducts,

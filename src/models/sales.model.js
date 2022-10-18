@@ -58,8 +58,9 @@ const listAllSalesProducts = async () => {
 };
 
 const deleteSale = async (saleId) => {
-  connection.execute('DELETE FROM StoreManager.sales WHERE id = ?',
-  [saleId]);
+  const [{ affectedRows }] = await connection.execute('DELETE FROM StoreManager.sales WHERE id = ?',
+    [saleId]);
+  return affectedRows;
 };
 
 const updateSale = async (saleId, payload) => {

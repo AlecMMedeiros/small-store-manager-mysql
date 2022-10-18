@@ -8,9 +8,9 @@ describe('Verificação da camada "Products Service"', function () {
   afterEach(sino.restore);
   describe('Verificação da funcionalidade de listar produtos através do usado da camada service', function () {
     it('Verifica de é possível listar todos os produtos através da "serviceListAllProducts"', async function () {
-      sino.stub(productsService, 'serviceListByIdProducts').resolves(listAllMock);
+      sino.stub(productsModel, 'listAll').resolves(listAllMock);
 
-      const serviceListAllProducts = await productsService.serviceListByIdProducts();     
+      const serviceListAllProducts = await productsService.serviceListAllProducts();
 
       expect(serviceListAllProducts).to.be.deep.equal(listAllMock);
     });
@@ -27,7 +27,7 @@ describe('Verificação da camada "Products Service"', function () {
       sino.stub(productsModel, 'insertProduct').resolves([{ insertId: 1 }]);
       sino.stub(productsModel, 'listById').resolves(listAllMock[0]);
 
-      const serviceInsertProduct = await productsService.serviceInsertProduct('Martelo de Thor');    
+      const serviceInsertProduct = await productsService.serviceInsertProduct('Martelo de Thor');
 
       expect(serviceInsertProduct).to.be.deep.equal(listAllMock[0]);
     });
@@ -48,4 +48,38 @@ describe('Verificação da camada "Products Service"', function () {
       expect(serviceInsertProduct.message).to.be.deep.equal(response);
     });
   });
+  describe('Verificação da funcionalidade de deletar produtos através do usado da camada service', function () {
+    it('Verifica de é possível deletar um produto não cadastrado"', async function () {
+      const response = { message: 'Product not found' };
+
+      sino.stub(productsModel, 'listById').resolves(undefined);
+
+
+      const deleteProduct = await productsService.serviceUpdateProduct(99);
+
+      expect(deleteProduct.message).to.be.deep.equal(response);
+    });
+    it('Verifica de é possível deletar um produto cadastrado"', async function () {
+      const { message } = { message: `Product 1 was deleted` };
+      const responseMock = [
+        {
+          fieldCount: 0,
+          affectedRows: 1,
+          insertId: 0,
+          info: '',
+          serverStatus: 2,
+          warningStatus: 0
+        },
+        undefined
+      ];
+      sino.stub(productsModel, 'listById').resolves(listAllMock[0]);
+      sino.stub(productsModel, 'deleteProduct').resolves(responseMock);
+
+
+      const deleteProduct = await productsService.serviceDeleteProduct(1);
+
+      expect(deleteProduct.message).to.be.deep.equal(message);
+    });
+  });
+
 });

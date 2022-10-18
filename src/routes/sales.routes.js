@@ -3,11 +3,11 @@ const { salesController } = require('../controllers');
 
 const salesRoute = express.Router();
 
-salesRoute.get('/:id', salesController.controllerListSaleById);
 salesRoute.put('/:id', salesController.controllerUpdateSale);
-salesRoute.get('/', salesController.controllerListAllSales);
+salesRoute.get('/:id', salesController.controllerListSaleById);
 
 salesRoute.post('/', salesController.controllerNewSale);
+salesRoute.get('/', salesController.controllerListAllSales);
 salesRoute.delete('/:id', salesController.controllerDeleteSale);
 
 module.exports = {
