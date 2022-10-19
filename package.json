@@ -1,5 +1,5 @@
 {
-  "name": "sd-0x-store-manager",
+  "name": "small-store-manager",
   "version": "1.0.0",
   "description": "Simple CRUD to sales and products",
   "main": "src/server.js",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tryber/sd-02-project-store-manager.git"
+    "url": "git+https://github.com/AlecMMedeiros/small-store-manager-mysql.git"
   },
   "author": "",
   "license": "ISC",
