@@ -11,7 +11,7 @@ Features in this app:
 * NodeJS
 * MySQL
 * ExpressJS
-* JavaScrip
+* JavaScript
 
 # Special thanks #
 
